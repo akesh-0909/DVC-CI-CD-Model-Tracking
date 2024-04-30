@@ -18,9 +18,9 @@ def get_data(config_path):
 
 if __name__ == "__main__":
     args = argparse.ArgumentParser() # create the object 
-    args.add_argument("--config") # fetch the arguments parsed form cmd liine
+    args.add_argument("--config") # declare the args
         # python src/get_data.py --config "params.yaml" or default = path.yaml
-    parsed_args = args.parse_args() #  see the parsed arg which is config path here
+    parsed_args = args.parse_args() #  fetch the parsed arg which is config path here
     data = get_data(config_path=parsed_args.config)
     
     

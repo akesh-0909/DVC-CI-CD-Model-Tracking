@@ -9,14 +9,66 @@ stages:
       size: 91998
     - path: src/get_data.py
       hash: md5
-      md5: a5976b1775856a372728ab7360630c8b
-      size: 1818
+      md5: e361de505ce4e875461debe34f2a6282
+      size: 1795
     - path: src/load_data.py
       hash: md5
-      md5: 115a79a9dc32371919d1096ba0828023
-      size: 745
+      md5: 90abc76d73a6137d32b63e7379c8d91a
+      size: 774
     outs:
     - path: data/raw/winequality.csv
       hash: md5
-      md5: c2090817d6f0cb6b77e63429d1733941
-      size: 100484
+      md5: 069b522b0321bc25a626ceeffcb8eb44
+      size: 93598
+  split_data:
+    cmd: python src/split_data.py --config=params.yaml
+    deps:
+    - path: data/raw/winequality.csv
+      hash: md5
+      md5: 069b522b0321bc25a626ceeffcb8eb44
+      size: 93598
+    - path: src/split_data.py
+      hash: md5
+      md5: 2e2956debfc50a621569a6beab2f5ad7
+      size: 1128
+    outs:
+    - path: data/processed/test_winequality.csv
+      hash: md5
+      md5: 81dce00e053ba5ebabeacf8e7dca537a
+      size: 74913
+    - path: data/processed/train_winequality.csv
+      hash: md5
+      md5: ee3284843265e5855bc07dd6427ab1c2
+      size: 18831
+  train_and_evaluate:
+    cmd: python src/train_and_evaluate.py --config=params.yaml
+    deps:
+    - path: data/processed/test_winequality.csv
+      hash: md5
+      md5: 81dce00e053ba5ebabeacf8e7dca537a
+      size: 74913
+    - path: data/processed/train_winequality.csv
+      hash: md5
+      md5: ee3284843265e5855bc07dd6427ab1c2
+      size: 18831
+    - path: src/train_and_evaluate.py
+      hash: md5
+      md5: 8ac732be3dda48cd4d6fa5c0f34f0104
+      size: 2579
+    params:
+      params.yaml:
+        estimators.ElasticNet.params.alpha: 0.88
+        estimators.ElasticNet.params.l1_ratio: 0.89
+    outs:
+    - path: report/params.json
+      hash: md5
+      md5: 755b8fd0b91a91aa84d16d6699480af6
+      size: 46
+    - path: report/scores.json
+      hash: md5
+      md5: 8360c0d263b4bf4f08a93e5127e8d951
+      size: 101
+    - path: saved_models/model.joblib
+      hash: md5
+      md5: ef98dde6605533c123fb922b9e660593
+      size: 1279
