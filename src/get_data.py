@@ -11,17 +11,17 @@ def read_params(config_path):
 
 def get_data(config_path):
     config = read_params(config_path)
-    print("config:",config['data_source']['s3_source'])
-
-
-    # data_path = config['']
+    data_path = config['data_source']['s3_source']
+    print(data_path)
+    df = pd.read_csv(data_path,sep=',')
+    return df
 
 if __name__ == "__main__":
     args = argparse.ArgumentParser() # create the object 
     args.add_argument("--config") # fetch the arguments parsed form cmd liine
         # python src/get_data.py --config "params.yaml" or default = path.yaml
     parsed_args = args.parse_args() #  see the parsed arg which is config path here
-    get_data(config_path=parsed_args.config)
+    data = get_data(config_path=parsed_args.config)
     
     
 ''' 
