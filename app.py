@@ -17,15 +17,16 @@ app = Flask(
     template_folder=template_dir
          )
 
-d
+
 @app.route('/',methods=['GET',"POST"])
 def index():
     if request.method == 'POST':
         print('post req')
         try:
             if request.form:
-        
+                
                 data_req = dict(request.form)
+                print('response came')
                 response = prediction.form_response(data_req)
                 return render_template('index.html',response = response)
 
@@ -35,8 +36,10 @@ def index():
                 return jsonify(response)
 
         except Exception as e:
+            print(e)
+            
 
-            return render_template('404.html',error = e)
+            return render_template('404.html',error = str( e))
         
     else:
         return render_template('index.html')
