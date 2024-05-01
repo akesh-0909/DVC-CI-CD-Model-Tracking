@@ -9,6 +9,7 @@ class NotInRange(Exception):
 # def test_function_name():
 
 
+
 def test_generic():
     a = 5
     with pytest.raises(NotInRange):
